@@ -1,0 +1,54 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+Playing with table is always fun in Angular. Many times user want to add, delete or update record in the table through user interactive/inline editable table.
+To achieve this we can use Angular dynamic form controls.
+We will treat each row as single FormGroup and whole table is single parent FormGroup structure will look like.
+
+In this tutorial Table structure can also be dynamic and can have any number of columns and each column will have different validation.
+
+Table column list and each column validation will be define in one JSON Object adn other JSON will have Actual Row Data.
