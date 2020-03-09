@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TableFormComponent } from './table-form/table-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TableFormComponent
   ],
   imports: [
     BrowserModule,
