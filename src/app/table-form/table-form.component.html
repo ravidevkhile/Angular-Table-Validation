@@ -1,5 +1,5 @@
 <p>table-form works!</p>
-<div class="col-12">
+<div class="col-12" formGroup="userForm">
     <div id="table" class="table-editable">
         <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
               class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
@@ -11,12 +11,10 @@
           </thead>
           <tbody>           
             
-            <tr>
-              <td class="pt-3-half"><input type="text" class="form-control" value="Guadalupe House">  </td>
-              <td class="pt-3-half" ><input type="number" class="form-control" value="9"> </td>
-              <td class="pt-3-half" ><input type="number" class="form-control" value="9"> </td>
-              <td class="pt-3-half" ><input type="number" class="form-control" value="9"> </td>
-              <td class="pt-3-half" ><input type="number" class="form-control" value="9"> </td>              
+            <tr *ngFor="let user of getuserControls().controls; let i = index">
+                <td *ngFor="let title of tableHeader" class='table-header'>
+                    <input type="text" class="form-control" formControlName="{{title.fieldName}}">  </td>
+              
             </tr>
 
           </tbody>
