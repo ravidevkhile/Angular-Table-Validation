@@ -1,23 +1,23 @@
 <p>table-form works!</p>
-<div class="col-12" formGroup="userForm">
-    <div id="table" class="table-editable">
-        <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-              class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
-        <table class="table table-bordered table-responsive-md table-striped text-center">
-          <thead>
-            <tr>
-                <th *ngFor="let title of tableHeader" class='table-header'>{{title.header}}</th>
-            </tr>
-          </thead>
-          <tbody>           
-            
-            <tr *ngFor="let user of getuserControls().controls; let i = index">
-                <td *ngFor="let title of tableHeader" class='table-header'>
-                    <input type="text" class="form-control" formControlName="{{title.fieldName}}">  </td>
-              
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
+<div class="col-12" [formGroup]="userForm">
+  <div id="table" class="table-editable">
+    <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x"
+          aria-hidden="true"></i></a></span>
+    <table class="table table-bordered table-responsive-md table-striped text-center">
+      <thead>
+        <tr>
+          <th *ngFor="let title of tableHeader" class='table-header'>{{title.header}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let user of getUsersList().controls; let i = index">
+          <tr class="table-bordered"  formArrayName="users">
+            <td *ngFor="let title of tableHeader" [formGroupName]="i">
+              <input type="text" class="form-control" formControlName="{{title.fieldName}}"> 
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
 </div>

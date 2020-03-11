@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl, ValidatorFn, FormArray } from '@angular/forms';
 
 @Component({
@@ -6,54 +6,48 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl, Valid
   templateUrl: './table-form.component.html',
   styleUrls: ['./table-form.component.css']
 })
-export class TableFormComponent implements OnInit {
+export class TableFormComponent implements OnInit, AfterViewInit {
   userForm: FormGroup;
-  tableData: {
-    name: string;
-    email: string,
-    dateFrom: string,
-    dateTo: string,
-    mobNumber: any
-  }[] = [{
+  tableData = [{
     name: 'Ravindra Devkhile',
-    email: 'ravidevkhile@gmail.com',
+    email: 'ravidev@gmail.com',
     dateFrom: '12/03/2001',
     dateTo: '12/03/2001',
     mobNumber: 9860643587
   }, {
     name: 'Ravindra Devkhile1',
-    email: 'ravidevkhile1@gmail.com',
+    email: 'ravidev1@gmail.com',
     dateFrom: '12/03/2001',
     dateTo: '12/03/2000',
     mobNumber: 'ravidevkhile'
   }]
 
-  tableHeader: TableHeader[];
+  tableHeader=[{
+    fieldName: 'name',
+    header: 'Name',
+    validator: ['required']
+  }, {
+    fieldName: 'email',
+    header: 'Email',
+    validator: ['required', 'emailValidator',]
+  },
+  {
+    fieldName: 'dateFrom',
+    header: 'From Date',
+    validator: ['required']
+  }, {
+    fieldName: 'dateTo',
+    header: 'To Date',
+    validator: ['required']
+  }, {
+    fieldName: 'mobNumber',
+    header: 'Mobile Number',
+    validator: ['required','numberValidator']
+  }];
   constructor(private fb: FormBuilder) {
-    this.tableHeader = [{
-      fieldName: 'name',
-      header: 'Name',
-      validator: ['required']
-    }, {
-      fieldName: 'email',
-      header: 'Email',
-      validator: ['required', 'emailValidator',]
-    },
-    {
-      fieldName: 'dateFrom',
-      header: 'From Date',
-      validator: ['required']
-    }, {
-      fieldName: 'dateTo',
-      header: 'To Date',
-      validator: ['required,dateLessThan("dateTo","dateFrom")']
-    }, {
-      fieldName: 'mobNumber',
-      header: 'Mobile Number',
-      validator: ['required,numberValidator())']
-    }]
+    
   }
- getuserControls():FormArray
+ getUsersList():FormArray
  {
   let users =this.userForm.get('users') as FormArray;
   return users;
@@ -64,24 +58,34 @@ export class TableFormComponent implements OnInit {
     });
     this.tableData.forEach(element => {
       let userdata=this.userForm.get('users') as FormArray;
-      userdata.push(this.initiatForm(element));  
+      let usercontrol=this.initiatForm(element);
+      userdata.push(usercontrol);  
     });
     
+  }
+  ngAfterViewInit():void{
+    let users =this.userForm.get('users') as FormArray;
+    // this.userForm.markAsDirty()
+    users.controls.forEach(userControl => 
+       {
+        // userControl.markAsDirty();
+      this.tableHeader.forEach(element => {
+        // userControl.get(element.fieldName).markAsTouched();      
+      });  
+    });
   }
   initiatForm(dataObj: any): FormGroup {
     let group = {}
     this.tableHeader.forEach(element => {
-      group[element.fieldName] = new FormControl(dataObj[element.fieldName], this.getValidations(element.validator));
+      group[element.fieldName] = new FormControl(dataObj[element.fieldName],this.getValidations(element));      
     });
-    const control = this.fb.group(group);
+    const control = this.fb.group(group);      
     return control;
   }
   getValidations(dataElement: TableHeader): ValidatorFn[] {
     let validators: ValidatorFn[] = [];
     if (dataElement.validator && dataElement.validator.length > 1) {
-      var str = new String(dataElement.validator)
-      var splits = str.split("|")
-      splits.forEach(validation => {
+      dataElement.validator.forEach(validation => {
         if (validation == 'numberValidator') {
           validators.push(this.numberValidator);
         } else if (validation == 'emailValidator') {
