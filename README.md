@@ -1,6 +1,9 @@
 # TableValidation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
+Reactive Forms in Angular: Dynamically Creating Form Fields  and field Validation from JSON.
+Playing with table is always fun in Angular. Many times user want to add or update record in the table through user interactive/inline editable table with validation. To achieve this we can use Angular dynamic form controls.
+
+So you have a table and would like to add form fields and validate them dynamically from a api responce(JSON)? It’s easy to do with Reactive Forms and FormArray. FormArray is a bit like FormGroup and it’s used in a very similar way, the difference being that it’s used as an array that wraps around an arbitrary amount of FormControl, FormGroup or even other FormArray instances.
 
 ## Development server
 
